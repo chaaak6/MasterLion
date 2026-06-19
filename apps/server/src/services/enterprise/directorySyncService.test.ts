@@ -231,11 +231,12 @@ const withTransaction = (db: ReturnType<typeof createDirectorySyncDb>) => {
     insert: vi.fn(db.db.insert),
     update: vi.fn(db.db.update),
   };
+  const transaction = vi.fn(<T,>(callback: (tx: typeof transactionDb) => Promise<T>) =>
+    callback(transactionDb),
+  );
   const transactionalDb = {
     ...db.db,
-    transaction: vi.fn(async (callback: (tx: typeof transactionDb) => Promise<unknown>) =>
-      callback(transactionDb),
-    ),
+    transaction,
   };
 
   return { transactionDb, transactionalDb };
@@ -520,7 +521,7 @@ describe('applyEnterpriseDirectorySnapshot', () => {
     await expect(
       applyEnterpriseDirectorySnapshot({
         actorUserId: 'admin-user',
-        db: transactionalDb,
+        db: transactionalDb as never,
         provider: 'wecom',
         snapshot: {
           departments: [{ externalDepartmentId: '1', name: 'Headquarters' }],

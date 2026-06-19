@@ -57,6 +57,7 @@ type DbLike = {
       findMany?: (args?: unknown) => Promise<EnterpriseDepartmentRow[]>;
     };
   };
+  transaction?: <T>(callback: (tx: DbLike) => Promise<T>) => Promise<T>;
   update: (table: unknown) => any;
 };
 
@@ -388,47 +389,65 @@ const writeAuditLogBestEffort = async (
   } catch {}
 };
 
+const applyDirectoryState = async (input: DirectorySyncInput, lastSyncedAt: Date) => {
+  const departmentByExternalId = await upsertDepartments(
+    input.db,
+    input.provider,
+    input.snapshot.departments,
+  );
+  const { activeMembershipKeys, activeUserIds } = await syncMembers(
+    input.db,
+    input.provider,
+    input.snapshot.members,
+    departmentByExternalId,
+    lastSyncedAt,
+  );
+  const inactiveMembers =
+    input.missingMemberPolicy === 'mark_inactive'
+      ? await markInactiveMembers(
+          input.db,
+          input.provider,
+          departmentByExternalId,
+          activeMembershipKeys,
+          activeUserIds,
+          lastSyncedAt,
+        )
+      : 0;
+
+  return {
+    inactiveMembers,
+    status: 'completed' as const,
+    syncedDepartments: input.snapshot.departments.length,
+    syncedMembers: input.snapshot.members.length,
+  };
+};
+
+const applyDirectoryStateWithOptionalTransaction = async (
+  input: DirectorySyncInput,
+  lastSyncedAt: Date,
+) => {
+  if (typeof input.db.transaction !== 'function') {
+    return applyDirectoryState(input, lastSyncedAt);
+  }
+
+  return input.db.transaction((tx) =>
+    applyDirectoryState({ ...input, db: tx }, lastSyncedAt),
+  );
+};
+
 export async function applyEnterpriseDirectorySnapshot(
   input: DirectorySyncInput,
 ): Promise<DirectorySyncSummary> {
   const lastSyncedAt = new Date();
 
   try {
-    const departmentByExternalId = await upsertDepartments(
-      input.db,
-      input.provider,
-      input.snapshot.departments,
-    );
-    const { activeMembershipKeys, activeUserIds } = await syncMembers(
-      input.db,
-      input.provider,
-      input.snapshot.members,
-      departmentByExternalId,
-      lastSyncedAt,
-    );
-    const inactiveMembers =
-      input.missingMemberPolicy === 'mark_inactive'
-        ? await markInactiveMembers(
-            input.db,
-            input.provider,
-            departmentByExternalId,
-            activeMembershipKeys,
-            activeUserIds,
-            lastSyncedAt,
-          )
-        : 0;
-    const summary: DirectorySyncSummary = {
-      inactiveMembers,
-      status: 'completed',
-      syncedDepartments: input.snapshot.departments.length,
-      syncedMembers: input.snapshot.members.length,
-    };
+    const summary = await applyDirectoryStateWithOptionalTransaction(input, lastSyncedAt);
 
     await writeAuditLogBestEffort(input.db, {
       action: 'directory.sync.completed',
       actorUserId: input.actorUserId,
       metadata: {
-        inactiveMembers,
+        inactiveMembers: summary.inactiveMembers,
         provider: input.provider,
         syncedDepartments: input.snapshot.departments.length,
         syncedMembers: input.snapshot.members.length,
