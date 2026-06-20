@@ -1,4 +1,5 @@
 import { type AgentState } from '@lobechat/agent-runtime';
+import { BRANDING_PROVIDER } from '@lobechat/business-const';
 import { consumeStreamUntilDone } from '@lobechat/model-runtime';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -697,7 +698,7 @@ describe('RuntimeExecutors', () => {
             payload: {
               messages: [{ content: 'Hello', role: 'user' }],
               model: 'deepseek-v4-pro',
-              provider: 'lobehub',
+              provider: BRANDING_PROVIDER,
               tools: [],
             },
             type: 'call_llm' as const,
@@ -4426,7 +4427,7 @@ describe('RuntimeExecutors', () => {
           messages: [{ content: 'Hello', role: 'user' }],
           model: 'gpt-4',
           parentMessageId: 'parent-msg-123',
-          provider: 'lobehub',
+          provider: BRANDING_PROVIDER,
           tools: [],
         },
         type: 'call_llm' as const,
