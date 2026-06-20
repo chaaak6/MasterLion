@@ -8,8 +8,8 @@ import { Compass, MessageSquare, User } from 'lucide-react';
 import { memo, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { MOBILE_TABBAR_HEIGHT } from '@/const/layoutTokens';
 import { getProductFeature, isProductFeatureDisabled } from '@/config/productFeatures';
+import { MOBILE_TABBAR_HEIGHT } from '@/const/layoutTokens';
 import { useWorkspaceAwareNavigate } from '@/features/Workspace/useWorkspaceAwareNavigate';
 import { useActiveTabKey } from '@/hooks/useActiveTabKey';
 import { SidebarTabKey } from '@/store/global/initialState';

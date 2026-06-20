@@ -1,6 +1,6 @@
 import { type ReactElement } from 'react';
 
-import { type ProductFeatureKey, getProductFeatureStatus } from '@/config/productFeatures';
+import { getProductFeatureStatus,type ProductFeatureKey } from '@/config/productFeatures';
 import { redirectElement } from '@/utils/router';
 
 import FeatureDisabledPage from './FeatureDisabledPage';

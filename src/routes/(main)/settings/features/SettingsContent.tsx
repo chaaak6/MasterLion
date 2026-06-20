@@ -2,8 +2,8 @@
 
 import { Fragment, useEffect } from 'react';
 
-import FeatureDisabledPage from '@/features/ProductFeatureGate/FeatureDisabledPage';
 import NavHeader from '@/features/NavHeader';
+import FeatureDisabledPage from '@/features/ProductFeatureGate/FeatureDisabledPage';
 import SettingContainer from '@/features/Setting/SettingContainer';
 import { useWorkspaceAwareNavigate } from '@/features/Workspace/useWorkspaceAwareNavigate';
 import { SettingsTabs } from '@/store/global/initialState';

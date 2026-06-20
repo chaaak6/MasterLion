@@ -212,7 +212,7 @@ describe('Aihub provider detail page', () => {
     expect(screen.queryByText('Prompt Token')).not.toBeInTheDocument();
     expect(screen.queryByText('Completion Token')).not.toBeInTheDocument();
     expect(screen.queryByText('原始余额 quota')).not.toBeInTheDocument();
-    expect(screen.queryByText(/宸|鏈|鐢|浣|楼/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/[宸鏈鐢浣楼]/)).not.toBeInTheDocument();
     expect(screen.getByTestId('model-list')).toHaveTextContent('newapi: gpt-4o-mini');
 
     fireEvent.click(screen.getByRole('button', { name: '刷新模型' }));

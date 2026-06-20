@@ -3,7 +3,7 @@ import { DOWNLOAD_URL, isDesktop } from '@lobechat/const';
 import { Hotkey, Icon } from '@lobehub/ui';
 import { type ItemType } from 'antd/es/menu/interface';
 import { BrainCircuit, Cloudy, Download, HardDriveDownload, LogOut, Settings2 } from 'lucide-react';
-import { memo, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
