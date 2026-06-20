@@ -33,6 +33,10 @@ import {
   type UpdateAiProviderParams,
 } from '@/types/aiProvider';
 import { AiProviderSourceEnum } from '@/types/aiProvider';
+import {
+  canonicalizeAihubModelIdForProvider,
+  normalizeAihubModelId,
+} from '@/utils/aihubModelId';
 
 export type ProviderModelListItem = {
   abilities: ModelAbilities;
@@ -50,6 +54,31 @@ export type ProviderModelListItem = {
 };
 
 type ModelNormalizer = (model: EnabledAiModel) => Promise<ProviderModelListItem>;
+
+const AIHUB_GLM_51_MODEL_ID = 'glm-5.1';
+const AIHUB_GLM_51_DISPLAY_NAME = 'GLM-5.1';
+
+const isAihubGlm51Model = (model: Pick<EnabledAiModel, 'id' | 'providerId'>) =>
+  model.providerId === 'newapi' && normalizeAihubModelId(model.id) === AIHUB_GLM_51_MODEL_ID;
+
+const normalizeEnabledAiModelForAihub = (model: EnabledAiModel): EnabledAiModel => {
+  if (!isAihubGlm51Model(model)) return model;
+
+  return {
+    ...model,
+    abilities: {
+      ...(model.abilities || {}),
+      functionCall: true,
+      reasoning: true,
+      search: true,
+    } as ModelAbilities,
+    displayName: AIHUB_GLM_51_DISPLAY_NAME,
+    id: canonicalizeAihubModelIdForProvider(model.providerId, model.id),
+  };
+};
+
+export const normalizeEnabledAiModelsForAihub = (models: EnabledAiModel[]): EnabledAiModel[] =>
+  models.map(normalizeEnabledAiModelForAihub);
 
 const getModelProperty = async <T>(
   model: EnabledAiModel,
@@ -80,17 +109,18 @@ const createProviderModelCollector = (
 };
 
 export const normalizeChatModel = async (model: EnabledAiModel): Promise<ProviderModelListItem> => {
+  const normalizedModel = normalizeEnabledAiModelForAihub(model);
   const [description, pricing] = await Promise.all([
-    getModelProperty<string>(model, 'description'),
-    getModelProperty<Pricing>(model, 'pricing'),
+    getModelProperty<string>(normalizedModel, 'description'),
+    getModelProperty<Pricing>(normalizedModel, 'pricing'),
   ]);
 
   return {
-    abilities: (model.abilities || {}) as ModelAbilities,
-    contextWindowTokens: model.contextWindowTokens,
-    displayName: model.displayName ?? '',
-    id: model.id,
-    releasedAt: model.releasedAt,
+    abilities: (normalizedModel.abilities || {}) as ModelAbilities,
+    contextWindowTokens: normalizedModel.contextWindowTokens,
+    displayName: normalizedModel.displayName ?? '',
+    id: normalizedModel.id,
+    releasedAt: normalizedModel.releasedAt,
     ...(description && { description }),
     ...(pricing && { pricing }),
   };
@@ -475,18 +505,20 @@ export class AiProviderActionImpl {
 
         if (isLogin) {
           const data = await aiProviderService.getAiProviderRuntimeState();
+          const enabledAiModels = normalizeEnabledAiModelsForAihub(data.enabledAiModels);
 
           // Build model lists with proper async handling
           const [enabledChatModelList, enabledImageModelList, enabledVideoModelList] =
             await Promise.all([
-              buildChatProviderModelLists(data.enabledChatAiProviders, data.enabledAiModels),
-              buildImageProviderModelLists(data.enabledImageAiProviders, data.enabledAiModels),
-              buildVideoProviderModelLists(data.enabledVideoAiProviders, data.enabledAiModels),
+              buildChatProviderModelLists(data.enabledChatAiProviders, enabledAiModels),
+              buildImageProviderModelLists(data.enabledImageAiProviders, enabledAiModels),
+              buildVideoProviderModelLists(data.enabledVideoAiProviders, enabledAiModels),
             ]);
 
           return {
             ...data,
             builtinAiModelList,
+            enabledAiModels,
             enabledChatModelList,
             enabledImageModelList,
             enabledVideoModelList,
@@ -520,8 +552,8 @@ export class AiProviderActionImpl {
           .map((item) => ({ id: item.id, name: item.name, source: AiProviderSourceEnum.Builtin }));
 
         // Build model lists for non-login state as well
-        const enabledAiModels = builtinAiModelList.filter(
-          (m) => m.providerId === 'newapi' && m.enabled,
+        const enabledAiModels = normalizeEnabledAiModelsForAihub(
+          builtinAiModelList.filter((m) => m.providerId === 'newapi' && m.enabled),
         );
         const [enabledChatModelList, enabledImageModelList, enabledVideoModelList] =
           await Promise.all([

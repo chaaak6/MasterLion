@@ -5,6 +5,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   getChatModelList,
   getImageModelList,
+  normalizeEnabledAiModelsForAihub,
   normalizeChatModel,
   normalizeImageModel,
 } from '../action';
@@ -76,6 +77,49 @@ describe('aiProvider action helpers', () => {
       expect(result.description).toBe('Inline description');
       expect(result.pricing).toBe(pricing);
       expect(fallbackSpy).not.toHaveBeenCalled();
+    });
+
+    it('canonicalizes Aihub GLM 5.1 aliases and restores agent abilities', async () => {
+      const result = await normalizeChatModel(
+        createChatModel({
+          abilities: { functionCall: false, reasoning: false, search: false },
+          displayName: 'glm5-5.1',
+          id: 'glm5-5.1',
+          providerId: 'newapi',
+        }),
+      );
+
+      expect(result).toMatchObject({
+        abilities: { functionCall: true, reasoning: true, search: true },
+        displayName: 'GLM-5.1',
+        id: 'glm-5.1',
+      });
+    });
+  });
+
+  describe('normalizeEnabledAiModelsForAihub', () => {
+    it('normalizes Aihub GLM 5.1 before models are stored in runtime state', () => {
+      const result = normalizeEnabledAiModelsForAihub([
+        createChatModel({
+          abilities: { functionCall: false, reasoning: false, search: false },
+          displayName: 'glm5-5.1',
+          id: 'glm5-5.1',
+          providerId: 'newapi',
+        }),
+        createChatModel({
+          displayName: 'GPT-4',
+          id: 'gpt-4',
+          providerId: 'openai',
+        }),
+      ]);
+
+      expect(result[0]).toMatchObject({
+        abilities: { functionCall: true, reasoning: true, search: true },
+        displayName: 'GLM-5.1',
+        id: 'glm-5.1',
+        providerId: 'newapi',
+      });
+      expect(result[1]).toMatchObject({ id: 'gpt-4', providerId: 'openai' });
     });
   });
 
@@ -190,6 +234,32 @@ describe('aiProvider action helpers', () => {
       );
 
       expect(result.map((model) => model.id)).toEqual(['visible-model']);
+    });
+
+    it('deduplicates Aihub GLM 5.1 aliases after canonicalization', async () => {
+      const result = await getChatModelList(
+        [
+          createChatModel({
+            abilities: { functionCall: false, reasoning: false, search: false },
+            displayName: 'glm5-5.1',
+            id: 'glm5-5.1',
+            providerId: 'newapi',
+          }),
+          createChatModel({
+            displayName: 'GLM-5.1',
+            id: 'glm-5.1',
+            providerId: 'newapi',
+          }),
+        ],
+        'newapi',
+      );
+
+      expect(result).toHaveLength(1);
+      expect(result[0]).toMatchObject({
+        abilities: { functionCall: true, reasoning: true, search: true },
+        displayName: 'GLM-5.1',
+        id: 'glm-5.1',
+      });
     });
   });
 
