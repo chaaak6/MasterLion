@@ -772,9 +772,9 @@ export const desktopRoutes: RouteObject[] = [
       {
         children: [
           // Workspace home — handled by the persistent `DesktopHomeLayout` at
-          // the outer main layout (mirrors how `/` index is empty here). Adding
-          // an element would render Home twice on top of `DesktopHomeLayout`.
+          // the outer main layout (mirrors how `/` index uses an empty fragment).
           {
+            element: <></>,
             index: true,
           },
           ...sharedMainAreaChildren,
@@ -946,6 +946,7 @@ export const desktopRoutes: RouteObject[] = [
 
       // Default route - home page (handled by persistent layout)
       {
+        element: <></>,
         handle: {
           meta: routeMeta({ icon: Home, titleKey: 'navigation.home' }),
         },

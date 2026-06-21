@@ -1,8 +1,10 @@
-import { cpSync, existsSync, mkdirSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 
 const root = path.resolve(import.meta.dirname, '..');
-const copyDirs = ['assets', 'i18n', 'vendor'] as const;
+
+const entryHtmlFiles = new Set(['index.html', 'index.mobile.html', 'index.auth.html']);
+
 const targets = [
   { distDir: 'desktop', publicDir: 'public/_spa' },
   { distDir: 'mobile', publicDir: 'public/_spa' },
@@ -13,13 +15,13 @@ for (const { distDir, publicDir } of targets) {
   const spaDir = path.resolve(root, publicDir);
   mkdirSync(spaDir, { recursive: true });
 
-  for (const dir of copyDirs) {
-    const sourceDir = path.resolve(root, `dist/${distDir}/${dir}`);
-    const targetDir = path.resolve(spaDir, dir);
+  const distRoot = path.resolve(root, `dist/${distDir}`);
+  if (!existsSync(distRoot)) continue;
 
-    if (!existsSync(sourceDir)) continue;
+  for (const entry of readdirSync(distRoot)) {
+    if (entryHtmlFiles.has(entry)) continue;
 
-    cpSync(sourceDir, targetDir, { recursive: true });
-    console.log(`Copied dist/${distDir}/${dir} -> ${publicDir}/${dir}`);
+    cpSync(path.resolve(distRoot, entry), path.resolve(spaDir, entry), { recursive: true });
+    console.log(`Copied dist/${distDir}/${entry} -> ${publicDir}/${entry}`);
   }
 }
