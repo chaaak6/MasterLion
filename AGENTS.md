@@ -2,7 +2,7 @@
 
 Guidelines for using AI coding agents in this MasterLion repository.
 
-Current product version: `0.0.1`.
+Current product version: `0.0.2`.
 
 MasterLion is a company-internal AI Agent workspace for 小宗狮. It is derived from a historical upstream AI chat codebase, but user-facing documentation, release notes, security policy, and product language should describe MasterLion and its Aihub integration. Legacy package names such as `@lobehub/*`, `@lobechat/*`, provider ids, database enums, and import paths are implementation details and must not be renamed casually.
 
