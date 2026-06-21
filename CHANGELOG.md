@@ -1,3 +1,32 @@
+<a name="readme-top"></a>
+
+# Changelog
+
+### [Version 0.0.2](https://github.com/biel-cc/MasterLion/compare/v0.0.1...v0.0.2)
+
+<sup>Released on **2026-06-21**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: warn on unsupported visual uploads.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: warn on unsupported visual uploads ([1411790](https://github.com/biel-cc/MasterLion/commit/1411790))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 # Changelog
 
 All notable MasterLion changes are recorded here.
