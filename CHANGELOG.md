@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 0.0.5](https://github.com/biel-cc/MasterLion/compare/v0.0.4...v0.0.5)
+
+<sup>Released on **2026-06-21**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: resolve SPA static asset 404s and desktop route warning.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: resolve SPA static asset 404s and desktop route warning ([e280736](https://github.com/biel-cc/MasterLion/commit/e280736))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 0.0.4](https://github.com/biel-cc/MasterLion/compare/v0.0.3...v0.0.4)
 
 <sup>Released on **2026-06-21**</sup>

@@ -2444,6 +2444,15 @@
   {
     "children": {
       "fixes": [
+        "resolve SPA static asset 404s and desktop route warning."
+      ]
+    },
+    "date": "2026-06-21",
+    "version": "0.0.5"
+  },
+  {
+    "children": {
+      "fixes": [
         "align mobile experience and branding."
       ]
     },
