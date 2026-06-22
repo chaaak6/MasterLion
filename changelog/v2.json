@@ -2443,6 +2443,15 @@
   },
   {
     "children": {
+      "features": [
+        "add WeCom login provisioning."
+      ]
+    },
+    "date": "2026-06-22",
+    "version": "0.0.6"
+  },
+  {
+    "children": {
       "fixes": [
         "resolve SPA static asset 404s and desktop route warning."
       ]

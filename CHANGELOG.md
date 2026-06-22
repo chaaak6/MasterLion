@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 0.0.6](https://github.com/biel-cc/MasterLion/compare/v0.0.5...v0.0.6)
+
+<sup>Released on **2026-06-22**</sup>
+
+#### ✨ Features
+
+- **misc**: add WeCom login provisioning.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: add WeCom login provisioning ([e157493](https://github.com/biel-cc/MasterLion/commit/e157493))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 0.0.5](https://github.com/biel-cc/MasterLion/compare/v0.0.4...v0.0.5)
 
 <sup>Released on **2026-06-21**</sup>
