@@ -2444,6 +2444,23 @@
   {
     "children": {
       "features": [
+        "reassign Aihub token ownership + onboarding fallback agents."
+      ],
+      "fixes": [
+        "use bridge to find managed tokens before falling back to admin API.",
+        "use admin credentials for token management in aihub provisioning.",
+        "skip aihub provisioning gracefully when admin credentials not configured.",
+        "pass corpId/agentId to validateWecomSsoConfig in env-only mode.",
+        "WeCom email fetch and aihub provisioning in env-only mode.",
+        "WeCom OAuth login route blocked by middleware + Dockerfile optimization."
+      ]
+    },
+    "date": "2026-06-23",
+    "version": "0.0.7"
+  },
+  {
+    "children": {
+      "features": [
         "add WeCom login provisioning."
       ]
     },

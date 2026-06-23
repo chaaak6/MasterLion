@@ -2,6 +2,49 @@
 
 # Changelog
 
+## [Version 0.0.7](https://github.com/biel-cc/MasterLion/compare/v0.0.6...v0.0.7)
+
+<sup>Released on **2026-06-23**</sup>
+
+#### ✨ Features
+
+- **misc**: reassign Aihub token ownership + onboarding fallback agents.
+
+#### 🐛 Bug Fixes
+
+- **misc**: use bridge to find managed tokens before falling back to admin API.
+- **misc**: use admin credentials for token management in aihub provisioning.
+- **misc**: skip aihub provisioning gracefully when admin credentials not configured.
+- **misc**: pass corpId/agentId to validateWecomSsoConfig in env-only mode.
+- **misc**: WeCom email fetch and aihub provisioning in env-only mode.
+- **misc**: WeCom OAuth login route blocked by middleware + Dockerfile optimization.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: reassign Aihub token ownership + onboarding fallback agents ([8a80f6b](https://github.com/biel-cc/MasterLion/commit/8a80f6b))
+
+#### What's fixed
+
+- **misc**: use bridge to find managed tokens before falling back to admin API ([312b6b3](https://github.com/biel-cc/MasterLion/commit/312b6b3))
+- **misc**: use admin credentials for token management in aihub provisioning ([0626eb7](https://github.com/biel-cc/MasterLion/commit/0626eb7))
+- **misc**: skip aihub provisioning gracefully when admin credentials not configured ([2f67c42](https://github.com/biel-cc/MasterLion/commit/2f67c42))
+- **misc**: pass corpId/agentId to validateWecomSsoConfig in env-only mode ([119e73e](https://github.com/biel-cc/MasterLion/commit/119e73e))
+- **misc**: WeCom email fetch and aihub provisioning in env-only mode ([c42ba4a](https://github.com/biel-cc/MasterLion/commit/c42ba4a))
+- **misc**: WeCom OAuth login route blocked by middleware + Dockerfile optimization ([e8e366e](https://github.com/biel-cc/MasterLion/commit/e8e366e))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 0.0.6](https://github.com/biel-cc/MasterLion/compare/v0.0.5...v0.0.6)
 
 <sup>Released on **2026-06-22**</sup>
