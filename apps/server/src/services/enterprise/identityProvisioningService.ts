@@ -8,6 +8,7 @@ import {
   externalIdentities,
   newApiBindings,
   type NewApiBindingStatusType,
+  users,
 } from '@/database/schemas';
 
 import {
@@ -23,7 +24,11 @@ type DbLike = {
     enterpriseDepartments?: {
       findMany?: (args: unknown) => Promise<EnterpriseDepartmentRow[]>;
     };
+    users?: {
+      findFirst?: (args: unknown) => Promise<{ username?: string | null } | undefined>;
+    };
   };
+  select?: (fields: Record<string, unknown>) => { from: (table: unknown) => { where: (condition: unknown) => { limit: (n: number) => Promise<Array<{ username?: string | null }>> } } };
   update: (table: unknown) => any;
 };
 
@@ -340,9 +345,21 @@ export class IdentityProvisioningService {
         try {
           const aihubProvisioningAdapter =
             this.aihubProvisioningAdapter ?? new NewApiProvisioningAdapter();
+
+          // Fetch the MasterLion username for token naming (MasterLion_{username}).
+          let masterLionUsername: string | undefined;
+          if (typeof this.db.query?.users?.findFirst === 'function') {
+            const userRow = await this.db.query.users.findFirst({
+              columns: { username: true },
+              where: eq(users.id, input.userId),
+            });
+            masterLionUsername = userRow?.username ?? undefined;
+          }
+
           const provisioningResult = await aihubProvisioningAdapter.provisionEnterpriseUser({
             email: input.email,
             employeeNumber: input.employeeNumber,
+            masterLionUsername,
             name: input.name,
             policy,
             userId: input.userId,

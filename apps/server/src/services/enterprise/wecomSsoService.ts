@@ -56,7 +56,7 @@ const wecomAihubProvisioningSchema = z
     ),
     managedTokenName: stringWithDefault('masterlion-managed'),
     managedTokenQuota: z.number().min(0).default(WECOM_DEFAULT_AIHUB_INITIAL_QUOTA),
-    managedTokenUnlimitedQuota: z.boolean().default(false),
+    managedTokenUnlimitedQuota: z.boolean().default(true),
     userGroup: z.preprocess(emptyStringToUndefined, z.string().optional()),
   })
   .default({});
