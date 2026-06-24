@@ -483,7 +483,7 @@ describe('NewApiService', () => {
       isEnabled: vi.fn(() => true),
       listAccessibleModels: vi
         .fn()
-        .mockResolvedValue(['glm-5.1', 'qwen-image-2.0', 'text-embedding-v4']),
+        .mockResolvedValue(['glm-5.2', 'qwen-image-2.0', 'text-embedding-v4']),
     };
     const service = new NewApiService({
       client: client as any,
@@ -518,11 +518,11 @@ describe('NewApiService', () => {
       expect.any(Function),
     );
     expect(synced.models.map((model: any) => model.id)).toEqual([
-      'glm-5.1',
+      'glm-5.2',
       'qwen-image-2.0',
       'text-embedding-v4',
     ]);
-    expect(synced.defaultModel).toBe('glm-5.1');
+    expect(synced.defaultModel).toBe('glm-5.2');
     expect(synced.models).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
@@ -531,10 +531,7 @@ describe('NewApiService', () => {
             reasoning: true,
             search: true,
           }),
-          id: 'glm-5.1',
-          settings: expect.objectContaining({
-            searchImpl: 'params',
-          }),
+          id: 'glm-5.2',
           type: 'chat',
         }),
         expect.objectContaining({
@@ -555,7 +552,7 @@ describe('NewApiService', () => {
       expect.arrayContaining([
         expect.objectContaining({
           abilities: expect.objectContaining({ functionCall: true, reasoning: true }),
-          id: 'glm-5.1',
+          id: 'glm-5.2',
           type: 'chat',
         }),
         expect.objectContaining({ id: 'qwen-image-2.0', type: 'image' }),

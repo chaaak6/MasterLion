@@ -1,10 +1,10 @@
-import type { ModelProviderCard } from '@/types/llm';
+import { DEFAULT_MODEL } from '@lobechat/business-const';
 
-const DEFAULT_AIHUB_MODEL = process.env.AIHUB_DEFAULT_MODEL || 'glm-5.1';
+import type { ModelProviderCard } from '@/types/llm';
 
 const Aihub: ModelProviderCard = {
   chatModels: [],
-  checkModel: DEFAULT_AIHUB_MODEL,
+  checkModel: DEFAULT_MODEL,
   description: 'Company-managed Aihub model access for MasterLion.',
   enabled: true,
   id: 'newapi',
