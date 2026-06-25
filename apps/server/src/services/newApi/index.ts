@@ -9,6 +9,7 @@ import type {
   NewApiUsageLogItem,
   NewApiUsageSummary,
 } from '@lobechat/types';
+import { DEFAULT_MODEL, isAihubModelHidden } from '@lobechat/business-const';
 import { processMultiProviderModelList } from '@lobechat/model-runtime';
 import { TRPCError } from '@trpc/server';
 import { and, eq } from 'drizzle-orm';
@@ -37,7 +38,6 @@ import {
 import { createNewApiReadSource, getNewApiDataSource, type NewApiReadSource } from './readSource';
 
 const DEFAULT_MANAGED_TOKEN_NAME = 'masterlion-managed';
-const DEFAULT_AIHUB_CHAT_MODEL = process.env.AIHUB_DEFAULT_MODEL || 'glm-5.1';
 const DEFAULT_USAGE_PAGE_SIZE = 100;
 const DEFAULT_QUOTA_DISPLAY_TYPE: NewApiQuotaPolicy['quotaDisplayType'] = 'CNY';
 const DEFAULT_QUOTA_PER_UNIT = 500_000;
@@ -247,7 +247,7 @@ const getDefaultModel = (models: AiProviderModelListItem[]) => {
   const chatModels = models.filter((model) => model.type === 'chat');
   if (chatModels.length === 0) return undefined;
 
-  const defaultModel = chatModels.find((model) => model.id === DEFAULT_AIHUB_CHAT_MODEL);
+  const defaultModel = chatModels.find((model) => model.id === DEFAULT_MODEL);
 
   if (defaultModel) return defaultModel.id;
 
@@ -789,6 +789,12 @@ export class NewApiService {
       const remoteModels = await this.client.listModels(key);
       models = await enrichNewApiModels(remoteModels.filter(supportsChat));
     }
+
+    // Apply the AIHUB_HIDDEN_MODELS deny-list before persisting, so models that
+    // are still enabled in the Aihub abilities table but should no longer be
+    // offered are dropped on the next sync and disappear after refresh.
+    models = models.filter((model) => !isAihubModelHidden(model.id));
+
     const defaultModel = getDefaultModel(models);
 
     const aiModelModel = new AiModelModel(this.db, this.userId);
