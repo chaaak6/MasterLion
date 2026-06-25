@@ -2,6 +2,33 @@
 
 # Changelog
 
+## [Version 0.0.8](https://github.com/biel-cc/MasterLion/compare/v0.0.7...v0.0.8)
+
+<sup>Released on **2026-06-25**</sup>
+
+#### ✨ Features
+
+- **misc**: add GLM-5.2 model card and AIHUB_HIDDEN_MODELS deny-list.
+- **misc**: switch default model to glm-5.2 and unify AIHUB_DEFAULT_MODEL source.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: add GLM-5.2 model card and AIHUB_HIDDEN_MODELS deny-list ([60a298f](https://github.com/biel-cc/MasterLion/commit/60a298f))
+- **misc**: switch default model to glm-5.2 and unify AIHUB_DEFAULT_MODEL source ([2e84e06](https://github.com/biel-cc/MasterLion/commit/2e84e06))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 0.0.7](https://github.com/biel-cc/MasterLion/compare/v0.0.6...v0.0.7)
 
 <sup>Released on **2026-06-23**</sup>
