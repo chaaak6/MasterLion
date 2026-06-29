@@ -1,8 +1,9 @@
 ## Set global build ENV
 ARG NODEJS_VERSION="24"
+ARG BASE_REGISTRY="docker.io/library"
 
 ## Base image for all building stages
-FROM node:${NODEJS_VERSION}-slim AS base
+FROM ${BASE_REGISTRY}/node:${NODEJS_VERSION}-slim AS base
 
 ARG USE_CN_MIRROR
 
@@ -135,7 +136,7 @@ RUN --mount=type=cache,id=masterlion-next-cache,target=/app/.next/cache,sharing=
     npm run build:docker
 
 ## Application image, copy all the files for production
-FROM busybox:1.37 AS app
+FROM ${BASE_REGISTRY}/busybox:1.37 AS app
 
 COPY --from=base /distroless/ /
 
