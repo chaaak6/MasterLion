@@ -80,7 +80,7 @@ export const embeddings = pgTable(
     chunkId: uuid('chunk_id')
       .references(() => chunks.id, { onDelete: 'cascade' })
       .unique(),
-    embeddings: vector('embeddings', { dimensions: 1024 }),
+    embeddings: vector('embeddings', { dimensions: 2048 }),
     model: text('model'),
     clientId: text('client_id'),
     userId: text('user_id').references(() => users.id, { onDelete: 'cascade' }),

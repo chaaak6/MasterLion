@@ -130,7 +130,7 @@ export const fileRouter = router({
 
                 const embeddings = await modelRuntime.embeddings(
                   {
-                    dimensions: 1024,
+                    dimensions: 2048,
                     input: chunks.map((c) => c.text),
                     model,
                   },

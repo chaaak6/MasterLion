@@ -137,7 +137,7 @@ export const chunkRouter = router({
 
       const embeddings = await agentRuntime.embeddings(
         {
-          dimensions: 1024,
+          dimensions: 2048,
           input: input.query,
           model,
         },

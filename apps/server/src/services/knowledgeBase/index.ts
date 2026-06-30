@@ -131,7 +131,7 @@ export class KnowledgeBaseSearchService {
       const query = input.query.length > 8000 ? input.query.slice(0, 8000) : input.query;
 
       const embeddings = await modelRuntime.embeddings(
-        { dimensions: 1024, input: query, model },
+        { dimensions: 2048, input: query, model },
         { metadata: { trigger: RequestTrigger.SemanticSearch }, user: this.userId },
       );
 

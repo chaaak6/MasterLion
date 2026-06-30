@@ -85,7 +85,7 @@ export const ragEvalRouter = router({
         if (!questionEmbeddingId) {
           const embeddings = await modelRuntime.embeddings(
             {
-              dimensions: 1024,
+              dimensions: 2048,
               input: question,
               model: !!embeddingModel ? embeddingModel : DEFAULT_EMBEDDING_MODEL,
             },

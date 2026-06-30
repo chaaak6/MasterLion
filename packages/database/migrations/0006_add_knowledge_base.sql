@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS "chunks" (
 CREATE TABLE IF NOT EXISTS "embeddings" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"chunk_id" uuid,
-	"embeddings" vector(1024),
+	"embeddings" vector(2048),
 	"model" text,
 	"user_id" text
 );

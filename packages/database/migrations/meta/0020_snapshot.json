@@ -3237,7 +3237,7 @@
         },
         "embeddings": {
           "name": "embeddings",
-          "type": "vector(1024)",
+          "type": "vector(2048)",
           "primaryKey": false,
           "notNull": false
         },

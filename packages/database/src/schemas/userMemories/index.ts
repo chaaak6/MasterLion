@@ -20,9 +20,9 @@ export const userMemories = pgTable(
 
     title: varchar255('title'),
     summary: text('summary'),
-    summaryVector1024: vector('summary_vector_1024', { dimensions: 1024 }),
+    summaryVector1024: vector('summary_vector_1024', { dimensions: 2048 }),
     details: text('details'),
-    detailsVector1024: vector('details_vector_1024', { dimensions: 1024 }),
+    detailsVector1024: vector('details_vector_1024', { dimensions: 2048 }),
 
     status: varchar255('status'),
 
@@ -69,7 +69,7 @@ export const userMemoriesContexts = pgTable(
 
     title: text('title'),
     description: text('description'),
-    descriptionVector: vector('description_vector', { dimensions: 1024 }),
+    descriptionVector: vector('description_vector', { dimensions: 2048 }),
 
     type: varchar255('type'),
     currentStatus: text('current_status'),
@@ -107,7 +107,7 @@ export const userMemoriesPreferences = pgTable(
     tags: text('tags').array(),
 
     conclusionDirectives: text('conclusion_directives'),
-    conclusionDirectivesVector: vector('conclusion_directives_vector', { dimensions: 1024 }),
+    conclusionDirectivesVector: vector('conclusion_directives_vector', { dimensions: 2048 }),
 
     type: varchar255('type'),
     suggestions: text('suggestions'),
@@ -174,9 +174,9 @@ export const userMemoriesActivities = pgTable(
 
     notes: text('notes'),
     narrative: text('narrative'),
-    narrativeVector: vector('narrative_vector', { dimensions: 1024 }),
+    narrativeVector: vector('narrative_vector', { dimensions: 2048 }),
     feedback: text('feedback'),
-    feedbackVector: vector('feedback_vector', { dimensions: 1024 }),
+    feedbackVector: vector('feedback_vector', { dimensions: 2048 }),
 
     capturedAt: timestamptz('captured_at').notNull().defaultNow(),
 
@@ -215,7 +215,7 @@ export const userMemoriesIdentities = pgTable(
 
     type: varchar255('type'),
     description: text('description'),
-    descriptionVector: vector('description_vector', { dimensions: 1024 }),
+    descriptionVector: vector('description_vector', { dimensions: 2048 }),
     episodicDate: timestamptz('episodic_date'),
     relationship: varchar255('relationship'),
     role: text('role'),
@@ -252,13 +252,13 @@ export const userMemoriesExperiences = pgTable(
 
     type: varchar255('type'),
     situation: text('situation'),
-    situationVector: vector('situation_vector', { dimensions: 1024 }),
+    situationVector: vector('situation_vector', { dimensions: 2048 }),
     reasoning: text('reasoning'),
     possibleOutcome: text('possible_outcome'),
     action: text('action'),
-    actionVector: vector('action_vector', { dimensions: 1024 }),
+    actionVector: vector('action_vector', { dimensions: 2048 }),
     keyLearning: text('key_learning'),
-    keyLearningVector: vector('key_learning_vector', { dimensions: 1024 }),
+    keyLearningVector: vector('key_learning_vector', { dimensions: 2048 }),
 
     scoreConfidence: real('score_confidence').default(0),
 
