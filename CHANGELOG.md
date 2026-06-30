@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 0.0.11](https://github.com/chaaak6/MasterLion/compare/v0.0.10...v0.0.11)
+
+<sup>Released on **2026-06-30**</sup>
+
+#### 🐛 Bug Fixes
+
+- **auth**: gate feature pages on aihub runtime state readiness.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **auth**: gate feature pages on aihub runtime state readiness ([e4840a3](https://github.com/chaaak6/MasterLion/commit/e4840a3))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 0.0.10](https://github.com/chaaak6/MasterLion/compare/v0.0.9...v0.0.10)
 
 <sup>Released on **2026-06-30**</sup>
