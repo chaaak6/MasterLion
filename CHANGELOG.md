@@ -2,6 +2,41 @@
 
 # Changelog
 
+## [Version 0.0.10](https://github.com/chaaak6/MasterLion/compare/v0.0.9...v0.0.10)
+
+<sup>Released on **2026-06-30**</sup>
+
+#### 🐛 Bug Fixes
+
+- **embedding**: align user memory dimensions to 2048.
+- **onboarding**: replace Lobe AI branding with BRANDING_NAME.
+
+#### ✨ Features
+
+- **embedding**: adapt to 2048-dim TI embedding service.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **embedding**: align user memory dimensions to 2048 ([ba4c21a](https://github.com/chaaak6/MasterLion/commit/ba4c21a))
+- **onboarding**: replace Lobe AI branding with BRANDING_NAME ([61abe85](https://github.com/chaaak6/MasterLion/commit/61abe85))
+
+#### What's improved
+
+- **embedding**: adapt to 2048-dim TI embedding service ([9059547](https://github.com/chaaak6/MasterLion/commit/9059547))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 0.0.9](https://github.com/chaaak6/MasterLion/compare/v0.0.8...v0.0.9)
 
 <sup>Released on **2026-06-30**</sup>

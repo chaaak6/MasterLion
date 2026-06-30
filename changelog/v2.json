@@ -2442,6 +2442,11 @@
     "version": "2.0.0-next.1"
   },
   {
+    "children": {},
+    "date": "2026-06-30",
+    "version": "0.0.10"
+  },
+  {
     "children": {
       "features": [
         "WeCom 工作台自动登录入口."
